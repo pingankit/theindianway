@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type='text/javascript' src="./js.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+        <link rel="stylesheet" href="./style.css" type="text/css" />
+    </head>
+    <body>
+        Latest File:
+		<input type="file" id="deltafileinput" />
+		Original File:
+		<input type="file" id="oldfileinput" />
+
+		<button  onclick="showDifference()" id="showDifferencebtn">Show Difference</button>
+		<button  onclick="downloadMergedFile()" id="downloadMergedFilebtn">Download Merged File</button>
+		
+<div id="visual"></div>
+        <hr/>
+        <div id="annotated"></div>
+        <script>
+		
+		
+		
+		
+		var left = {};
+        var right = {};
+		var delta;
+		var newJson;
+		var filename = "merged.json";
+
+$('#downloadMergedFilebtn').hide();
+
+  function onChangeLeft(event) {
+  $('#downloadMergedFilebtn').hide();
+
+        var reader = new FileReader();
+        reader.onload = onReaderLoadLeft;
+        reader.readAsText(event.target.files[0]);
+		
+    }
+function onChangeRight(event) {
+$('#downloadMergedFilebtn').hide();
+
+        var reader = new FileReader();
+        reader.onload = onReaderLoadRight;
+		filename=event.target.files[0].name;
+        reader.readAsText(event.target.files[0]);
+    }
+    function onReaderLoadLeft(event){
+        left = JSON.parse(event.target.result);
+    }
+	function onReaderLoadRight(event){
+        right = JSON.parse(event.target.result);
+    }
+	document.getElementById('deltafileinput').addEventListener('change', onChangeLeft);
+	document.getElementById('oldfileinput').addEventListener('change', onChangeRight);
+
+
+	var processFile=function(){
+				if(!left || !right){
+				alert('Kindly select both files');
+				}else{
+				getMergedFiles();
+				}
+
+				
+		}
+		var showDifference=function() {
+		delta = jsondiffpatch.diff(right,left);
+		console.log(delta);
+            // beautiful html diff
+            document.getElementById('visual').innerHTML = jsondiffpatch.formatters.html.format(delta, right);
+jsondiffpatch.formatters.html.hideUnchanged();
+            // self-explained json
+            //document.getElementById('annotated').innerHTML = jsondiffpatch.formatters.annotated.format(delta, right);
+		
+			$('#downloadMergedFilebtn').show();
+
+			   };
+			  
+		
+var downloadMergedFile = function(){
+				newJson = jsondiffpatch.patch(right, delta);
+
+
+	
+	
+	var blob = new Blob([JSON.stringify(newJson)], { type: 'text/json;charset=utf-8;' });
+    if (navigator.msSaveBlob) { // IE 10+
+        navigator.msSaveBlob(blob, filename);
+    } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            // Browsers that support HTML5 download attribute
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+}
+			  
+            
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+<script>
+    function selectAllFeatures() {
+        var featureFiles = $('input[name ="fileName"]');
+
+        if ($('input[name="selectAllFeature"')[0].checked) {
+            for (var i = 0; i < featureFiles.length; i++) {
+                featureFiles[i].checked = true;
+            }
+        } else {
+            for (var i = 0; i < featureFiles.length; i++) {
+                featureFiles[i].checked = false;
+            }
+        }
+
+    }
+
+    function selecFeaturetFile(event) {
+        if (event.target.checked) {
+            $('input[name="selectAllFeature"')[0].checked = true;
+            var featureFiles = $('input[name ="fileName"]');
+            for (var i = 0; i < featureFiles.length; i++) {
+                if (!featureFiles[i].checked) {
+                    $('input[name="selectAllFeature"')[0].checked = false;
+                }
+            }
+        } else {
+            $('input[name="selectAllFeature"')[0].checked = false;
+        }
+    }
+
+    function selecAllGlobal() {
+        var featureFiles = $('input[name ="GfileName"]');
+
+        if ($('input[name="selectAllGlobal"')[0].checked) {
+            for (var i = 0; i < featureFiles.length; i++) {
+                featureFiles[i].checked = true;
+            }
+        } else {
+            for (var i = 0; i < featureFiles.length; i++) {
+                featureFiles[i].checked = false;
+            }
+        }
+
+    }
+
+    function selecGlobalFile(event) {
+        if (event.target.checked) {
+            $('input[name="selectAllGlobal"')[0].checked = true;
+            var featureFiles = $('input[name ="GfileName"]');
+            for (var i = 0; i < featureFiles.length; i++) {
+                if (!featureFiles[i].checked) {
+                    $('input[name="selectAllGlobal"')[0].checked = false;
+                }
+            }
+        } else {
+            $('input[name="selectAllGlobal"')[0].checked = false;
+        }
+    }
+
+    function getScript() {
+        $('.loader').show();
+        $('form').hide();
+        var script = "source=$1\ndestination=$2\n";
+        var featureFiles = $('input[name ="fileName"]');
+        for (var i = 0; i < featureFiles.length; i++) {
+            if (featureFiles[i].checked) {
+                script += "wget -P $destination $source" + featureFiles[i].value + "\n";
+            }
+            if (i == featureFiles.length - 1) {
+                getGlobalFileSelection(script);
+            }
+        }
+    }
+
+    function getGlobalFileSelection(script) {
+        var globalFiles = $('input[name ="GfileName"]');
+        for (var i = 0; i < globalFiles.length; i++) {
+            if (globalFiles[i].checked) {
+                script += "wget -P $destination $source" + globalFiles[i].value + "\n";
+            }
+            if (i == globalFiles.length - 1) {
+                generateBLOB(script);
+            }
+        }
+    }
+
+    function generateBLOB(script) {
+        var filename = 'GetFilesFromRemote' + new Date().getTime() + '.sh';
+
+        var blob = new Blob([script], {
+            type: 'text/json;charset=utf-8;'
+        });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, filename);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) {
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+        $('#script').show();
+        $('#script')[0].innerHTML += "<br><br><div id=\"scriptText\">./" + filename + " '" + $("#source")[0].value + "' '" + $("#destination")[0].value+ "'</div>";
+        //$('#script')[0].innerHTML += "<br><br><button onclick=\"copyCommand()\">Copy</button>";
+        $('.loader').hide();
+    }
+
+    function validateUrl() {
+        if ($("#source")[0].value && $("#destination")[0].value) {
+            $('.form').show();
+            $("#source")[0].disabled = true;
+            $("#destination")[0].disabled = true;
+
+        } else {
+            alert("Source and destination can't be empty");
+        }
+    }
+
+    function copyCommand() {
+        var copyText = document.getElementById("scriptText");
+
+        /* Select the text field */
+        copyText.select();
+
+        document.execCommand("copy");
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+    }
+</script>
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin .5s linear infinite;
+        /* Safari */
+        animation: spin .5s linear infinite;
+    }
+    
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+    
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<body>
+
+    <h1>GetFilesFromRemote</h1> Source:&nbsp;
+    <input id="source" type="text" /> Destination:&nbsp;
+    <input id="destination" type="text" />
+
+    <input id="showFiles" type="button" onclick="validateUrl();" value="Get file list" />
+    <div class="loader" style="display: none;"></div>
+    <form class="form" style="display: none;">
+        <fieldset style="display: inline;float: left;">
+            <legend>Feature Files</legend>
+            <input type="checkbox" name="selectAllFeature" value="selectAll" onclick="selectAllFeatures();">Select All
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/agencyCreateConfiguration.json" onclick="return selecFeaturetFile(event);">agencyCreateConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/agencyUpdateConfiguration.json" onclick="return selecFeaturetFile(event);">agencyUpdateConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/ancillariesConfiguration.json" onclick="return selecFeaturetFile(event);">ancillariesConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/bnplConfiguration.json" onclick="return selecFeaturetFile(event);">bnplConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/bnplConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">bnplConfirmationConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/bnplPassengerConfiguration.json" onclick="return selecFeaturetFile(event);">bnplPassengerConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/bnplPaymentConfiguration.json" onclick="return selecFeaturetFile(event);">bnplPaymentConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/brandBonusesConfiguration.json" onclick="return selecFeaturetFile(event);">brandBonusesConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/cancelConfiguration.json" onclick="return selecFeaturetFile(event);">cancelConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/cancelConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">cancelConfirmationConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/cancelPaymentConfiguration.json" onclick="return selecFeaturetFile(event);">cancelPaymentConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/cancelTransactionSummaryConfiguration.json" onclick="return selecFeaturetFile(event);">cancelTransactionSummaryConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/carsConfiguration.json" onclick="return selecFeaturetFile(event);">carsConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/confirmationConfiguration.json" onclick="return selecFeaturetFile(event);">confirmationConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/confirmationPrintConfiguration.json" onclick="return selecFeaturetFile(event);">confirmationPrintConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/createProfileConfiguration.json" onclick="return selecFeaturetFile(event);">createProfileConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/dateSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">dateSelectionConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/editPassengerConfiguration.json" onclick="return selecFeaturetFile(event);">editPassengerConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/exchangeAncillariesConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeAncillariesConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/exchangeConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeConfirmationConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/exchangeFlightSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeFlightSelectionConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/exchangePassengerConfiguration.json" onclick="return selecFeaturetFile(event);">exchangePassengerConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/exchangePaymentConfiguration.json" onclick="return selecFeaturetFile(event);">exchangePaymentConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/exchangeRoutesConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeRoutesConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/flightScheduleConfiguration.json" onclick="return selecFeaturetFile(event);">flightScheduleConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/flightSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">flightSelectionConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/flightStatusConfiguration.json" onclick="return selecFeaturetFile(event);">flightStatusConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/hotelsConfiguration.json" onclick="return selecFeaturetFile(event);">hotelsConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/iropConfiguration.json" onclick="return selecFeaturetFile(event);">iropConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/manageTripsConfiguration.json" onclick="return selecFeaturetFile(event);">manageTripsConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/matrixConfiguration.json" onclick="return selecFeaturetFile(event);">matrixConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/mtoAncillariesConfiguration.json" onclick="return selecFeaturetFile(event);">mtoAncillariesConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/mtoConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">mtoConfirmationConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/mtoPaymentConfiguration.json" onclick="return selecFeaturetFile(event);">mtoPaymentConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/mtoSeatSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">mtoSeatSelectionConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/myProfileConfiguration.json" onclick="return selecFeaturetFile(event);">myProfileConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/passengerConfiguration.json" onclick="return selecFeaturetFile(event);">passengerConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/paymentConfiguration.json" onclick="return selecFeaturetFile(event);">paymentConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/seatSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">seatSelectionConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/tripDetailsConfiguration.json" onclick="return selecFeaturetFile(event);">tripDetailsConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/upgradeConfiguration.json" onclick="return selecFeaturetFile(event);">upgradeConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/upgradeConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">upgradeConfirmationConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/upgradePaymentConfiguration.json" onclick="return selecFeaturetFile(event);">upgradePaymentConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/upgradeSeatSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">upgradeSeatSelectionConfiguration.json
+            <br>
+            <input type="checkbox" name="fileName" value="/data/features/upsellConfiguration.json" onclick="return selecFeaturetFile(event);">upsellConfiguration.json
+            <br>
+        </fieldset>
+        <fieldset style="float: left;">
+            <legend>Global Features</legend>
+            <input type="checkbox" name="selectAllGlobal" value="selectAll" onclick="return selecAllGlobal();">Select All
+            <br>
+            <input type="checkbox" name="GfileName" value="/data/global/footerConfiguration.json" onclick="return selecGlobalFile(event);">footerConfiguration.json
+            <br>
+            <input type="checkbox" name="GfileName" value="/data/global/metadata.jsonprovincesConfiguration.json" onclick="return selecGlobalFile(event);">metadata.jsonprovincesConfiguration.json
+            <br>
+            <input type="checkbox" name="GfileName" value="/data/global/rulesConfiguration.json" onclick="return selecGlobalFile(event);">rulesConfiguration.json
+            <br>
+            <input type="checkbox" name="GfileName" value="/data/global/signUpConfiguration.json" onclick="return selecGlobalFile(event);">signUpConfiguration.json
+            <br>
+            <input type="checkbox" name="GfileName" value="/data/global/headerConfiguration.json" onclick="return selecGlobalFile(event);">headerConfiguration.json
+            <br>
+            <input type="checkbox" name="GfileName" value="/data/global/phoneConfiguration.json" onclick="return selecGlobalFile(event);">phoneConfiguration.json
+            <br>
+            <input type="checkbox" name="GfileName" value="/data/global/routes.json" onclick="return selecGlobalFile(event);">routes.json
+            <br>
+            <input type="checkbox" name="GfileName" value="/data/global/signInConfiguration.json" onclick="return selecGlobalFile(event);">signInConfiguration.json
+            <br>
+            <input type="checkbox" name="GfileName" value="/data/global/validations.json" onclick="return selecGlobalFile(event);">validations.json
+            <br>
+        </fieldset>
+        <br>
+        <input type="button" value="Get the script" onclick="return getScript();" />
+    </form>
+    <fieldset id="script" style="display: none; margin-top: 20px;    width: 50%;    background: cornsilk;">
+        Run the following command at the file location
+    </fieldset>
+
+</body>
+
+</html>
