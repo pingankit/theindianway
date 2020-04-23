@@ -67,7 +67,7 @@
         var featureFiles = $('input[name ="fileName"]');
         for (var i = 0; i < featureFiles.length; i++) {
             if (featureFiles[i].checked) {
-                script += "wget -P $destination $source" + featureFiles[i].value + "\n";
+                script += "wget -P $destination/features $source" + featureFiles[i].value + "\n";
             }
             if (i == featureFiles.length - 1) {
                 getGlobalFileSelection(script);
@@ -79,7 +79,7 @@
         var globalFiles = $('input[name ="GfileName"]');
         for (var i = 0; i < globalFiles.length; i++) {
             if (globalFiles[i].checked) {
-                script += "wget -P $destination $source" + globalFiles[i].value + "\n";
+                script += "wget -P $destination/global $source" + globalFiles[i].value + "\n";
             }
             if (i == globalFiles.length - 1) {
                 generateBLOB(script);
@@ -180,118 +180,118 @@
             <legend>Feature Files</legend>
             <input type="checkbox" name="selectAllFeature" value="selectAll" onclick="selectAllFeatures();">Select All
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/agencyCreateConfiguration.json" onclick="return selecFeaturetFile(event);">agencyCreateConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/agencyCreateConfiguration.json" onclick="return selecFeaturetFile(event);">agencyCreateConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/agencyUpdateConfiguration.json" onclick="return selecFeaturetFile(event);">agencyUpdateConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/agencyUpdateConfiguration.json" onclick="return selecFeaturetFile(event);">agencyUpdateConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/ancillariesConfiguration.json" onclick="return selecFeaturetFile(event);">ancillariesConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/ancillariesConfiguration.json" onclick="return selecFeaturetFile(event);">ancillariesConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/bnplConfiguration.json" onclick="return selecFeaturetFile(event);">bnplConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/bnplConfiguration.json" onclick="return selecFeaturetFile(event);">bnplConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/bnplConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">bnplConfirmationConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/bnplConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">bnplConfirmationConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/bnplPassengerConfiguration.json" onclick="return selecFeaturetFile(event);">bnplPassengerConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/bnplPassengerConfiguration.json" onclick="return selecFeaturetFile(event);">bnplPassengerConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/bnplPaymentConfiguration.json" onclick="return selecFeaturetFile(event);">bnplPaymentConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/bnplPaymentConfiguration.json" onclick="return selecFeaturetFile(event);">bnplPaymentConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/brandBonusesConfiguration.json" onclick="return selecFeaturetFile(event);">brandBonusesConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/brandBonusesConfiguration.json" onclick="return selecFeaturetFile(event);">brandBonusesConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/cancelConfiguration.json" onclick="return selecFeaturetFile(event);">cancelConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/cancelConfiguration.json" onclick="return selecFeaturetFile(event);">cancelConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/cancelConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">cancelConfirmationConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/cancelConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">cancelConfirmationConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/cancelPaymentConfiguration.json" onclick="return selecFeaturetFile(event);">cancelPaymentConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/cancelPaymentConfiguration.json" onclick="return selecFeaturetFile(event);">cancelPaymentConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/cancelTransactionSummaryConfiguration.json" onclick="return selecFeaturetFile(event);">cancelTransactionSummaryConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/cancelTransactionSummaryConfiguration.json" onclick="return selecFeaturetFile(event);">cancelTransactionSummaryConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/carsConfiguration.json" onclick="return selecFeaturetFile(event);">carsConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/carsConfiguration.json" onclick="return selecFeaturetFile(event);">carsConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/confirmationConfiguration.json" onclick="return selecFeaturetFile(event);">confirmationConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/confirmationConfiguration.json" onclick="return selecFeaturetFile(event);">confirmationConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/confirmationPrintConfiguration.json" onclick="return selecFeaturetFile(event);">confirmationPrintConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/confirmationPrintConfiguration.json" onclick="return selecFeaturetFile(event);">confirmationPrintConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/createProfileConfiguration.json" onclick="return selecFeaturetFile(event);">createProfileConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/createProfileConfiguration.json" onclick="return selecFeaturetFile(event);">createProfileConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/dateSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">dateSelectionConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/dateSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">dateSelectionConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/editPassengerConfiguration.json" onclick="return selecFeaturetFile(event);">editPassengerConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/editPassengerConfiguration.json" onclick="return selecFeaturetFile(event);">editPassengerConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/exchangeAncillariesConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeAncillariesConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/exchangeAncillariesConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeAncillariesConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/exchangeConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeConfirmationConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/exchangeConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeConfirmationConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/exchangeFlightSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeFlightSelectionConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/exchangeFlightSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeFlightSelectionConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/exchangePassengerConfiguration.json" onclick="return selecFeaturetFile(event);">exchangePassengerConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/exchangePassengerConfiguration.json" onclick="return selecFeaturetFile(event);">exchangePassengerConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/exchangePaymentConfiguration.json" onclick="return selecFeaturetFile(event);">exchangePaymentConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/exchangePaymentConfiguration.json" onclick="return selecFeaturetFile(event);">exchangePaymentConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/exchangeRoutesConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeRoutesConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/exchangeRoutesConfiguration.json" onclick="return selecFeaturetFile(event);">exchangeRoutesConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/flightScheduleConfiguration.json" onclick="return selecFeaturetFile(event);">flightScheduleConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/flightScheduleConfiguration.json" onclick="return selecFeaturetFile(event);">flightScheduleConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/flightSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">flightSelectionConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/flightSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">flightSelectionConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/flightStatusConfiguration.json" onclick="return selecFeaturetFile(event);">flightStatusConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/flightStatusConfiguration.json" onclick="return selecFeaturetFile(event);">flightStatusConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/hotelsConfiguration.json" onclick="return selecFeaturetFile(event);">hotelsConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/hotelsConfiguration.json" onclick="return selecFeaturetFile(event);">hotelsConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/iropConfiguration.json" onclick="return selecFeaturetFile(event);">iropConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/iropConfiguration.json" onclick="return selecFeaturetFile(event);">iropConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/manageTripsConfiguration.json" onclick="return selecFeaturetFile(event);">manageTripsConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/manageTripsConfiguration.json" onclick="return selecFeaturetFile(event);">manageTripsConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/matrixConfiguration.json" onclick="return selecFeaturetFile(event);">matrixConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/matrixConfiguration.json" onclick="return selecFeaturetFile(event);">matrixConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/mtoAncillariesConfiguration.json" onclick="return selecFeaturetFile(event);">mtoAncillariesConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/mtoAncillariesConfiguration.json" onclick="return selecFeaturetFile(event);">mtoAncillariesConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/mtoConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">mtoConfirmationConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/mtoConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">mtoConfirmationConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/mtoPaymentConfiguration.json" onclick="return selecFeaturetFile(event);">mtoPaymentConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/mtoPaymentConfiguration.json" onclick="return selecFeaturetFile(event);">mtoPaymentConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/mtoSeatSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">mtoSeatSelectionConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/mtoSeatSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">mtoSeatSelectionConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/myProfileConfiguration.json" onclick="return selecFeaturetFile(event);">myProfileConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/myProfileConfiguration.json" onclick="return selecFeaturetFile(event);">myProfileConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/passengerConfiguration.json" onclick="return selecFeaturetFile(event);">passengerConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/passengerConfiguration.json" onclick="return selecFeaturetFile(event);">passengerConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/paymentConfiguration.json" onclick="return selecFeaturetFile(event);">paymentConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/paymentConfiguration.json" onclick="return selecFeaturetFile(event);">paymentConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/seatSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">seatSelectionConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/seatSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">seatSelectionConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/tripDetailsConfiguration.json" onclick="return selecFeaturetFile(event);">tripDetailsConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/tripDetailsConfiguration.json" onclick="return selecFeaturetFile(event);">tripDetailsConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/upgradeConfiguration.json" onclick="return selecFeaturetFile(event);">upgradeConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/upgradeConfiguration.json" onclick="return selecFeaturetFile(event);">upgradeConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/upgradeConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">upgradeConfirmationConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/upgradeConfirmationConfiguration.json" onclick="return selecFeaturetFile(event);">upgradeConfirmationConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/upgradePaymentConfiguration.json" onclick="return selecFeaturetFile(event);">upgradePaymentConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/upgradePaymentConfiguration.json" onclick="return selecFeaturetFile(event);">upgradePaymentConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/upgradeSeatSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">upgradeSeatSelectionConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/upgradeSeatSelectionConfiguration.json" onclick="return selecFeaturetFile(event);">upgradeSeatSelectionConfiguration.json
             <br>
-            <input type="checkbox" name="fileName" value="/data/features/upsellConfiguration.json" onclick="return selecFeaturetFile(event);">upsellConfiguration.json
+            <input type="checkbox" name="fileName" value="/features/upsellConfiguration.json" onclick="return selecFeaturetFile(event);">upsellConfiguration.json
             <br>
         </fieldset>
         <fieldset style="float: left;">
             <legend>Global Features</legend>
             <input type="checkbox" name="selectAllGlobal" value="selectAll" onclick="return selecAllGlobal();">Select All
             <br>
-            <input type="checkbox" name="GfileName" value="/data/global/footerConfiguration.json" onclick="return selecGlobalFile(event);">footerConfiguration.json
+            <input type="checkbox" name="GfileName" value="/global/footerConfiguration.json" onclick="return selecGlobalFile(event);">footerConfiguration.json
             <br>
-            <input type="checkbox" name="GfileName" value="/data/global/metadata.jsonprovincesConfiguration.json" onclick="return selecGlobalFile(event);">metadata.jsonprovincesConfiguration.json
+            <input type="checkbox" name="GfileName" value="/global/metadata.json" onclick="return selecGlobalFile(event);">metadata.json
             <br>
-            <input type="checkbox" name="GfileName" value="/data/global/rulesConfiguration.json" onclick="return selecGlobalFile(event);">rulesConfiguration.json
+            <input type="checkbox" name="GfileName" value="/global/rulesConfiguration.json" onclick="return selecGlobalFile(event);">rulesConfiguration.json
             <br>
-            <input type="checkbox" name="GfileName" value="/data/global/signUpConfiguration.json" onclick="return selecGlobalFile(event);">signUpConfiguration.json
+            <input type="checkbox" name="GfileName" value="/global/signUpConfiguration.json" onclick="return selecGlobalFile(event);">signUpConfiguration.json
             <br>
-            <input type="checkbox" name="GfileName" value="/data/global/headerConfiguration.json" onclick="return selecGlobalFile(event);">headerConfiguration.json
+            <input type="checkbox" name="GfileName" value="/global/headerConfiguration.json" onclick="return selecGlobalFile(event);">headerConfiguration.json
             <br>
-            <input type="checkbox" name="GfileName" value="/data/global/phoneConfiguration.json" onclick="return selecGlobalFile(event);">phoneConfiguration.json
+            <input type="checkbox" name="GfileName" value="/global/phoneConfiguration.json" onclick="return selecGlobalFile(event);">phoneConfiguration.json
             <br>
-            <input type="checkbox" name="GfileName" value="/data/global/routes.json" onclick="return selecGlobalFile(event);">routes.json
+            <input type="checkbox" name="GfileName" value="/global/routes.json" onclick="return selecGlobalFile(event);">routes.json
             <br>
-            <input type="checkbox" name="GfileName" value="/data/global/signInConfiguration.json" onclick="return selecGlobalFile(event);">signInConfiguration.json
+            <input type="checkbox" name="GfileName" value="/global/signInConfiguration.json" onclick="return selecGlobalFile(event);">signInConfiguration.json
             <br>
-            <input type="checkbox" name="GfileName" value="/data/global/validations.json" onclick="return selecGlobalFile(event);">validations.json
+            <input type="checkbox" name="GfileName" value="/global/validations.json" onclick="return selecGlobalFile(event);">validations.json
             <br>
         </fieldset>
         <br>
