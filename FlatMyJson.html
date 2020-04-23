@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type='text/javascript' src="./js.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+        <link rel="stylesheet" href="./style.css" type="text/css" />
+    </head>
+    <body>
+        Json File:
+		<input type="file" id="jsonFile" />
+		
+		<button  onclick="flatMyJson()" id="showDifferencebtn">Flat my json</button>
+		
+<div id="visual"></div>
+        <hr/>
+        <script>
+
+var jsonData = {};
+ function onFileLoad(event){
+        jsonData = JSON.parse(event.target.result);
+    }
+
+  function onChangOfJSON(event) {
+        var reader = new FileReader();
+        reader.onload = onFileLoad;
+        reader.readAsText(event.target.files[0]);
+		
+    }
+
+	document.getElementById('jsonFile').addEventListener('change', onChangOfJSON);
+
+
+	var processFile=function(){
+				if(!jsonData){
+				alert('Kindly select the file');
+				}else{
+				download_csv();
+				}
+
+				
+		}
+		  
+
+function download_csv() {
+    var csv = 'Origin,Destination\n';
+    var keys = Object.keys(jsonData);
+    keys.forEach(function(arrayOfData,index) {
+    var key = keys[index];
+    if (arrayOfData.length && typeof(arrayOfData != "string"){
+            arrayOfData.forEach(function(destination){
+            csv += key;
+            csv += ",";
+            csv += destination;
+            csv += "\n";
+            }
+            });
+            
+    });
+ 
+    console.log(csv);
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'people.csv';
+    hiddenElement.click();
+}
+
+            
+            
+        </script>
+    </body>
+</html>
