@@ -9,7 +9,7 @@
         Json File:
 		<input type="file" id="jsonFile" />
 		
-		<button  onclick="flatMyJson()" id="showDifferencebtn">Flat my json</button>
+		<button  onclick="processFile()" id="showDifferencebtn">Flat my json</button>
 		
 <div id="visual"></div>
         <hr/>
@@ -27,7 +27,6 @@ var jsonData = {};
 		
     }
 
-	document.getElementById('jsonFile').addEventListener('change', onChangOfJSON);
 
 
 	var processFile=function(){
@@ -44,16 +43,16 @@ var jsonData = {};
 function download_csv() {
     var csv = 'Origin,Destination\n';
     var keys = Object.keys(jsonData);
-    keys.forEach(function(arrayOfData,index) {
-    var key = keys[index];
-    if (arrayOfData.length && typeof(arrayOfData != "string"){
+    keys.forEach(function(key,index) {
+	var arrayOfData = jsonData[key];
+    if (arrayOfData.length && typeof(arrayOfData) != "string"){
             arrayOfData.forEach(function(destination){
             csv += key;
             csv += ",";
             csv += destination;
             csv += "\n";
-            }
             });
+			}
             
     });
  
@@ -61,11 +60,12 @@ function download_csv() {
     var hiddenElement = document.createElement('a');
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     hiddenElement.target = '_blank';
-    hiddenElement.download = 'people.csv';
+    hiddenElement.download = 'flatjson.csv';
     hiddenElement.click();
 }
 
-            
+       	document.getElementById('jsonFile').addEventListener('change', onChangOfJSON);
+     
             
         </script>
     </body>
